@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace simp_ws_lei
 {
-    public partial class Form1 : Form
+    public partial class mainWsForm : Form
     {
-        public Form1()
+        public mainWsForm()
         {
             InitializeComponent();
         }

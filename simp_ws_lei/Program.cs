@@ -16,7 +16,7 @@ namespace simp_ws_lei
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new mainWsForm());
         }
     }
 }
