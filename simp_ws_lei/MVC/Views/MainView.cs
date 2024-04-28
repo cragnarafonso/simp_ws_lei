@@ -13,7 +13,7 @@ namespace simp_ws_lei.MVC.Views
         public event ActionTriggeredEventHandler CloseFormTriggered;
 
         public delegate void ApiTriggeredEventHandler(string json);
-        public event ApiTriggeredEventHandler RequestApiTriggered;
+        public event ApiTriggeredEventHandler RequestDistrictsIslandsIdentifiersTriggered;
 
         public delegate void GeolocationTriggeredEventHandler(ref ICoordinates coordinates);
         public event GeolocationTriggeredEventHandler GeolocationTriggered;
@@ -36,7 +36,7 @@ namespace simp_ws_lei.MVC.Views
         }
         protected virtual void OnRequestDistrictsIslandsIdentifiersTriggered(string json)
         {
-            RequestApiTriggered?.Invoke(json);
+            RequestDistrictsIslandsIdentifiersTriggered?.Invoke(json);
         }
 
         protected virtual void OnGeolocationTriggered(ref ICoordinates coordinates)
