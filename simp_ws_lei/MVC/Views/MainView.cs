@@ -50,16 +50,6 @@ namespace simp_ws_lei.MVC.Views
             {
                 MainView = this
             };
-
-            this.homeForm = new HomeForm
-            {
-                TopLevel = false,
-                AutoScroll = true,
-                Location = new System.Drawing.Point(5, 42),
-                Anchor = System.Windows.Forms.AnchorStyles.None,
-                MainView = this
-            };
-            this.mainForm.MainBodyPanel.Controls.Add(homeForm);
             this.mainForm.ShowDialog();
         }
 
@@ -108,12 +98,22 @@ namespace simp_ws_lei.MVC.Views
             OnGeolocationTriggered(ref coordinates);
         }
 
-        internal void LoadOrderDistrictsIslandsTriggered(ref IDistrictsIslandsIdentifiers districtsIslandsIdentifiers)
+        public void LoadHomeForm(ref IDistrictsIslandsIdentifiers districtsIslandsIdentifiers)
         {
             this.identifiers = districtsIslandsIdentifiers;
+            this.homeForm = new HomeForm
+            {
+                TopLevel = false,
+                AutoScroll = true,
+                Location = new System.Drawing.Point(5, 42),
+                Anchor = System.Windows.Forms.AnchorStyles.None,
+                MainView = this
+            };
             this.homeForm.HomeCmbBox.DataSource = this.identifiers.GetIdNameRegions();
             this.homeForm.HomeCmbBox.DisplayMember = "Value";
             this.homeForm.HomeCmbBox.ValueMember = "Id";
+
+            this.mainForm.MainBodyPanel.Controls.Add(homeForm);
             this.homeForm.Show();
         }
     }
