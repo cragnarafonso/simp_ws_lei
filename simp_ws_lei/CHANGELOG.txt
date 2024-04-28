@@ -4,6 +4,8 @@ Estrutura: versão | iniciais pessoa | data | descrição resumida
 
 *******************************************************************************************
 
+0.0.3	CA	28/04/2024	update MainView: LoadInterface
+
 0.0.2	CA	28/04/2024	implementação da listagem dos distritos e ilhas
 
 0.0.1	CA	27/04/2024	criação do projecto; desenho da interface
