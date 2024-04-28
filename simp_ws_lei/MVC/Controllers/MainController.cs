@@ -16,7 +16,7 @@ namespace simp_ws_lei.MVC.Controllers
             this.mainModel = new MainModel();
 
             this.mainView.CloseFormTriggered += this.CloseForm;
-            this.mainView.RequestApiTriggered += this.mainModel.DeserializeDistrictsIslandsIdentifiers;
+            this.mainView.RequestDistrictsIslandsIdentifiersTriggered += this.mainModel.DeserializeDistrictsIslandsIdentifiers;
             this.mainView.GeolocationTriggered += this.mainModel.OrderDistrictsIslandsTriggered;
 
             this.mainModel.NotificationMessageTriggered += this.mainView.OnDisplayFailureMessage;
