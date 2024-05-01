@@ -17,6 +17,13 @@ namespace simp_ws_lei.MVC.Controllers
 
             this.mainView.CloseFormTriggered += this.CloseForm;
             this.mainView.RequestDistrictsIslandsIdentifiersTriggered += this.mainModel.DeserializeDistrictsIslandsIdentifiers;
+
+            
+            //ADICIONADO POR MIGUEL -------
+            this.mainView.RequestDailyMeteorologyByLocationIdTriggered += this.mainModel.DeserializeDailyMeteorologyByLocationId;
+            //ADICIONADO POR MIGUEL -------
+
+
             this.mainView.GeolocationTriggered += this.mainModel.OrderDistrictsIslandsTriggered;
 
             this.mainModel.NotificationMessageTriggered += this.mainView.OnDisplayFailureMessage;

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Device.Location;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace simp_ws_lei.MVC.Views
 {
@@ -14,6 +15,10 @@ namespace simp_ws_lei.MVC.Views
 
         public delegate void ApiTriggeredEventHandler(string json);
         public event ApiTriggeredEventHandler RequestDistrictsIslandsIdentifiersTriggered;
+
+        //ADICIONADO POR MIGUEL -------
+        public event ApiTriggeredEventHandler RequestDailyMeteorologyByLocationIdTriggered;
+        //ADICIONADO POR MIGUEL -------
 
         public delegate void GeolocationTriggeredEventHandler(ref ICoordinates coordinates);
         public event GeolocationTriggeredEventHandler GeolocationTriggered;
@@ -38,6 +43,16 @@ namespace simp_ws_lei.MVC.Views
         {
             RequestDistrictsIslandsIdentifiersTriggered?.Invoke(json);
         }
+
+
+        //ADICIONADO POR MIGUEL -------
+        protected virtual void OnRequestDailyMeteorologyByLocationIdTriggered(string json)
+        {
+            RequestDailyMeteorologyByLocationIdTriggered?.Invoke(json);
+        }
+        //ADICIONADO POR MIGUEL -------
+
+
 
         protected virtual void OnGeolocationTriggered(ref ICoordinates coordinates)
         {
