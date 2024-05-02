@@ -116,7 +116,7 @@ namespace simp_ws_lei.MVC.Views
 
 
         //ADICIONADO POR MIGUEL -------
-        public void GetDailyMeteorology(string globalIdLocal)
+        public void GetDailyMeteorology(ref string globalIdLocal)
         {
             try
             {
@@ -133,7 +133,26 @@ namespace simp_ws_lei.MVC.Views
 
         public void LoadDailyMeteorology(ref IDailyMeteorologyByLocationId dailyMeteorologyByLocationId)
         {
-            //EM FALTA CARREGAR DADOS NA FORM
+            //clean home body panel
+            this.homeForm.HomeBodyPanel.Controls.Clear();
+
+            Label MeteorologyLabel = new Label();
+
+            MeteorologyLabel.Width = 400;
+            MeteorologyLabel.Height = 450;
+            MeteorologyLabel.Font = new System.Drawing.Font("Arial", 11);
+            MeteorologyLabel.Location = new System.Drawing.Point(5, 20);
+
+            foreach (var Meteorology in dailyMeteorologyByLocationId.Data)
+            {
+                MeteorologyLabel.Text += "Dia: " +  Meteorology.ForecastDate + "\n";
+                MeteorologyLabel.Text += "Temperatura Máxima: " + Meteorology.TMax + "\n";
+                MeteorologyLabel.Text += "Temperatura Mínima: " + Meteorology.TMin + "\n";
+                MeteorologyLabel.Text += "Precipitação: " + Meteorology.PrecipitaProb + "%\n\n";
+            }
+
+            this.homeForm.HomeBodyPanel.Controls.Add(MeteorologyLabel);
+
         }
         //ADICIONADO POR MIGUEL -------
 
@@ -142,14 +161,6 @@ namespace simp_ws_lei.MVC.Views
         public void LoadHomeForm(ref IDistrictsIslandsIdentifiers districtsIslandsIdentifiers)
         {
             this.identifiers = districtsIslandsIdentifiers;
-
-            //ADICIONADO POR MIGUEL -------
-            //LOAD DEFAULT DAILY METEOROLOGY FROM FIRST LOCAL ID
-            string FirstGlobalLocalId = this.identifiers.Data[0].GlobalLocalId.ToString();
-            this.GetDailyMeteorology(FirstGlobalLocalId);
-            //ADICIONADO POR MIGUEL -------
-
-
             this.homeForm = new HomeForm
             {
                 TopLevel = false,
@@ -164,6 +175,13 @@ namespace simp_ws_lei.MVC.Views
 
             this.mainForm.MainBodyPanel.Controls.Add(homeForm);
             this.homeForm.Show();
+
+
+            //ADICIONADO POR MIGUEL -------
+            //LOAD DEFAULT DAILY METEOROLOGY FROM FIRST LOCAL ID
+            string FirstGlobalLocalId = this.identifiers.Data[0].GlobalLocalId.ToString();
+            this.GetDailyMeteorology(ref FirstGlobalLocalId);
+            //ADICIONADO POR MIGUEL -------
         }
     }
 }

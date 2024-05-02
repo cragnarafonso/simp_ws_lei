@@ -82,6 +82,6 @@
 
         public System.Windows.Forms.ComboBox HomeCmbBox;
         private System.Windows.Forms.Panel HomeHeaderPanel;
-        private System.Windows.Forms.Panel HomeBodyPanel;
+        public System.Windows.Forms.Panel HomeBodyPanel;
     }
 }
