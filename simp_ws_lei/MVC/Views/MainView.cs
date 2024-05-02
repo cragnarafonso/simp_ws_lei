@@ -73,7 +73,7 @@ namespace simp_ws_lei.MVC.Views
             try
             {
                 string result = this.request.GetDistrictsIslandsIdentifiers();
-                OnRequestDistrictsIslandsIdentifiersTriggered(result);
+                OnRequestDistrictsIslandsIdentifiersTriggered(result);                
             }
             catch (Exception ex)
             {
@@ -113,9 +113,43 @@ namespace simp_ws_lei.MVC.Views
             OnGeolocationTriggered(ref coordinates);
         }
 
+
+
+        //ADICIONADO POR MIGUEL -------
+        public void GetDailyMeteorology(string globalIdLocal)
+        {
+            try
+            {
+                string resultDailyMeteorology = this.request.GetDailyMeteorologyByLocationId(globalIdLocal);
+                OnRequestDailyMeteorologyByLocationIdTriggered(resultDailyMeteorology);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.StackTrace);
+                OnDisplayFailureMessage("Não foi possível aceder à meteorologia!");
+            }
+            
+        }
+
+        public void LoadDailyMeteorology(ref IDailyMeteorologyByLocationId dailyMeteorologyByLocationId)
+        {
+            //EM FALTA CARREGAR DADOS NA FORM
+        }
+        //ADICIONADO POR MIGUEL -------
+
+
+
         public void LoadHomeForm(ref IDistrictsIslandsIdentifiers districtsIslandsIdentifiers)
         {
             this.identifiers = districtsIslandsIdentifiers;
+
+            //ADICIONADO POR MIGUEL -------
+            //LOAD DEFAULT DAILY METEOROLOGY FROM FIRST LOCAL ID
+            string FirstGlobalLocalId = this.identifiers.Data[0].GlobalLocalId.ToString();
+            this.GetDailyMeteorology(FirstGlobalLocalId);
+            //ADICIONADO POR MIGUEL -------
+
+
             this.homeForm = new HomeForm
             {
                 TopLevel = false,

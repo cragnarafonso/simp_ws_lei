@@ -29,6 +29,7 @@ namespace simp_ws_lei.MVC.Controllers
             this.mainModel.NotificationMessageTriggered += this.mainView.OnDisplayFailureMessage;
             this.mainModel.NotificationTriggered += this.mainView.GetDeviceGeolocation;
             this.mainModel.DistrictsIslandsIdentifiersTriggered += this.mainView.LoadHomeForm;
+            this.mainModel.DailyMeteorologyByLocationIdTriggered += this.mainView.LoadDailyMeteorology;
         }
 
         public void CloseForm()

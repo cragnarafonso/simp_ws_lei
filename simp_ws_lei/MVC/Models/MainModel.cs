@@ -49,7 +49,7 @@ namespace simp_ws_lei.MVC.Models
         //ADICIONADO POR MIGUEL -------
         protected virtual void OnNotificationDeserializeDailyMeteorologyByLocationIdTriggered()
         {
-            NotificationTriggered?.Invoke();
+            DailyMeteorologyByLocationIdTriggered?.Invoke(ref dailyMeteorologyByLocationId);
         }
         //ADICIONADO POR MIGUEL -------
 
