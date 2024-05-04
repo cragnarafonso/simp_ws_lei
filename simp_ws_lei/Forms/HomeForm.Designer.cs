@@ -53,7 +53,6 @@
             this.HomeCmbBox.Name = "HomeCmbBox";
             this.HomeCmbBox.Size = new System.Drawing.Size(441, 29);
             this.HomeCmbBox.TabIndex = 0;
-            this.HomeCmbBox.SelectedIndexChanged += new System.EventHandler(this.HomeCmbBox_SelectedIndexChanged);
             // 
             // HomeBodyPanel
             // 
@@ -83,6 +82,6 @@
 
         public System.Windows.Forms.ComboBox HomeCmbBox;
         private System.Windows.Forms.Panel HomeHeaderPanel;
-        public System.Windows.Forms.Panel HomeBodyPanel;
+        private System.Windows.Forms.Panel HomeBodyPanel;
     }
 }

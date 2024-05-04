@@ -19,16 +19,5 @@ namespace simp_ws_lei.Forms
         {
             InitializeComponent();
         }
-
-        private void HomeCmbBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            string SelectedGlobalIdLocation = HomeCmbBox.SelectedValue.ToString();
-
-            //ignore change when first load
-            if (SelectedGlobalIdLocation != "simp_ws_lei.Records.Item")
-            {
-                this.MainView.GetDailyMeteorology(ref SelectedGlobalIdLocation);
-            }
-        }
     }
 }
