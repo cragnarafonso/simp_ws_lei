@@ -19,7 +19,7 @@ namespace simp_ws_lei.MVC.Controllers
             this.mainView.RequestDistrictsIslandsIdentifiersTriggered += this.mainModel.DeserializeDistrictsIslandsIdentifiers;
 
             
-            //ADICIONADO POR MIGUEL -------
+            //ADICIONADO POR MIGUEL ------- 
             this.mainView.RequestDailyMeteorologyByLocationIdTriggered += this.mainModel.DeserializeDailyMeteorologyByLocationId;
             //ADICIONADO POR MIGUEL -------
 
