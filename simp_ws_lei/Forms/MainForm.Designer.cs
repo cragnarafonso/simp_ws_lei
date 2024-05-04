@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.mainHeaderPanel = new System.Windows.Forms.Panel();
             this.headerTitleLabel = new System.Windows.Forms.Label();
             this.HeaderCloseBtt = new System.Windows.Forms.Button();
@@ -37,6 +38,7 @@
             this.footerWarningBtt = new System.Windows.Forms.Button();
             this.footerHomeBtt = new System.Windows.Forms.Button();
             this.MainBodyPanel = new System.Windows.Forms.Panel();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.mainHeaderPanel.SuspendLayout();
             this.mainFooterPanel.SuspendLayout();
             this.SuspendLayout();
@@ -101,6 +103,8 @@
             this.footerClamBtt.Size = new System.Drawing.Size(106, 58);
             this.footerClamBtt.TabIndex = 6;
             this.footerClamBtt.UseVisualStyleBackColor = true;
+            this.footerClamBtt.Click += new System.EventHandler(this.footerClamBtt_Click);
+            this.footerClamBtt.MouseHover += new System.EventHandler(this.footerClamBtt_MouseHover);
             // 
             // footerSeaBtt
             // 
@@ -116,6 +120,8 @@
             this.footerSeaBtt.Size = new System.Drawing.Size(116, 58);
             this.footerSeaBtt.TabIndex = 5;
             this.footerSeaBtt.UseVisualStyleBackColor = true;
+            this.footerSeaBtt.Click += new System.EventHandler(this.footerSeaBtt_Click);
+            this.footerSeaBtt.MouseHover += new System.EventHandler(this.footerSeaBtt_MouseHover);
             // 
             // footerWarningBtt
             // 
@@ -131,6 +137,8 @@
             this.footerWarningBtt.Size = new System.Drawing.Size(115, 58);
             this.footerWarningBtt.TabIndex = 4;
             this.footerWarningBtt.UseVisualStyleBackColor = true;
+            this.footerWarningBtt.Click += new System.EventHandler(this.footerWarningBtt_Click);
+            this.footerWarningBtt.MouseHover += new System.EventHandler(this.footerWarningBtt_MouseHover);
             // 
             // footerHomeBtt
             // 
@@ -146,6 +154,8 @@
             this.footerHomeBtt.Size = new System.Drawing.Size(116, 58);
             this.footerHomeBtt.TabIndex = 3;
             this.footerHomeBtt.UseVisualStyleBackColor = true;
+            this.footerHomeBtt.Click += new System.EventHandler(this.footerHomeBtt_Click);
+            this.footerHomeBtt.MouseHover += new System.EventHandler(this.footerHomeBtt_MouseHover);
             // 
             // MainBodyPanel
             // 
@@ -153,6 +163,7 @@
             this.MainBodyPanel.Name = "MainBodyPanel";
             this.MainBodyPanel.Size = new System.Drawing.Size(457, 565);
             this.MainBodyPanel.TabIndex = 2;
+            this.MainBodyPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.MainBodyPanel_Paint);
             // 
             // MainForm
             // 
@@ -185,6 +196,7 @@
         private System.Windows.Forms.Button footerHomeBtt;
         private System.Windows.Forms.Button HeaderCloseBtt;
         private System.Windows.Forms.Label headerTitleLabel;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 
