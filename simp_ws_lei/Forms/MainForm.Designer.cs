@@ -163,7 +163,6 @@
             this.MainBodyPanel.Name = "MainBodyPanel";
             this.MainBodyPanel.Size = new System.Drawing.Size(457, 565);
             this.MainBodyPanel.TabIndex = 2;
-            this.MainBodyPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.MainBodyPanel_Paint);
             // 
             // MainForm
             // 
