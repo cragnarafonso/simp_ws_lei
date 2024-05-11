@@ -36,7 +36,7 @@ namespace simp_ws_lei
         //Avisos Meteorológicos button
         private void footerWarningBtt_Click(object sender, EventArgs e)
         {
-
+            this.MainView.OnWarningClick();
         }
 
         private void footerWarningBtt_MouseHover(object sender, EventArgs e)
@@ -49,7 +49,7 @@ namespace simp_ws_lei
         //Home Button
         private void footerHomeBtt_Click(object sender, EventArgs e)
         {
-
+            this.MainView.OnHomeClick();
         }
 
         private void footerHomeBtt_MouseHover(object sender, EventArgs e)
@@ -62,7 +62,7 @@ namespace simp_ws_lei
         //Estado do Mar Button
         private void footerSeaBtt_Click(object sender, EventArgs e)
         {
-
+            this.MainView.OnSeaClick();
         }
 
         private void footerSeaBtt_MouseHover(object sender, EventArgs e)
@@ -83,12 +83,5 @@ namespace simp_ws_lei
             toolTip1.Show("Interdições", footerClamBtt);
         }
         //
-
-        private void MainBodyPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-
     }
 }
