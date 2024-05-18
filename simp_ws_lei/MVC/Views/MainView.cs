@@ -88,7 +88,7 @@ namespace simp_ws_lei.MVC.Views
             {
                 TopLevel = false,
                 AutoScroll = true,
-                Location = new System.Drawing.Point(74, 171),
+                Location = new System.Drawing.Point(30, 171),
                 Anchor = System.Windows.Forms.AnchorStyles.None,
                 MainView = this
             };
