@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,20 @@ namespace simp_ws_lei.Forms
         private void OKErrorBtt_Click(object sender, EventArgs e)
         {
             this.MainView.OnCloseFormTriggered();
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            string url = "https://www.ipma.pt";
+
+            try
+            {
+                Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Não foi possivel abrir o link. " + ex.Message);
+            }
         }
     }
 }
