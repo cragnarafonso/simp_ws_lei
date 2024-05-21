@@ -9,12 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace simp_ws_lei
 {
     public partial class MainForm : Form
     {
-        public MainView MainView {  get; set; }
+        public MainView MainView { get; set; }
         public MainForm()
         {
             InitializeComponent();
@@ -29,5 +30,58 @@ namespace simp_ws_lei
         {
             this.MainView.OnFormLoad();
         }
+
+
+
+        //Avisos Meteorológicos button
+        private void footerWarningBtt_Click(object sender, EventArgs e)
+        {
+            this.MainView.OnWarningClick();
+        }
+
+        private void footerWarningBtt_MouseHover(object sender, EventArgs e)
+        {
+            toolTip1.Show("Avisos Meteorológicos", footerWarningBtt);
+        }
+        //
+
+
+        //Home Button
+        private void footerHomeBtt_Click(object sender, EventArgs e)
+        {
+            this.MainView.OnHomeClick();
+        }
+
+        private void footerHomeBtt_MouseHover(object sender, EventArgs e)
+        {
+            toolTip1.Show("Home", footerHomeBtt);
+        }
+        //
+
+
+        //Estado do Mar Button
+        private void footerSeaBtt_Click(object sender, EventArgs e)
+        {
+            this.MainView.OnSeaClick();
+        }
+
+        private void footerSeaBtt_MouseHover(object sender, EventArgs e)
+        {
+            toolTip1.Show("Estado do Mar", footerSeaBtt);
+        }
+        //
+
+
+        //Interdições Button
+        private void footerClamBtt_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void footerClamBtt_MouseHover(object sender, EventArgs e)
+        {
+            toolTip1.Show("Interdições", footerClamBtt);
+        }
+        //
     }
 }

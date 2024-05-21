@@ -16,12 +16,23 @@ namespace simp_ws_lei.MVC.Controllers
             this.mainModel = new MainModel();
 
             this.mainView.CloseFormTriggered += this.CloseForm;
-            this.mainView.RequestApiTriggered += this.mainModel.DeserializeDistrictsIslandsIdentifiers;
+            this.mainView.RequestDistrictsIslandsIdentifiersTriggered += this.mainModel.DeserializeDistrictsIslandsIdentifiers;
+
+            
+            //ADICIONADO POR MIGUEL -------
+            this.mainView.RequestDailyMeteorologyByLocationIdTriggered += this.mainModel.DeserializeDailyMeteorologyByLocationId;
+            //ADICIONADO POR MIGUEL -------
+
+
             this.mainView.GeolocationTriggered += this.mainModel.OrderDistrictsIslandsTriggered;
 
             this.mainModel.NotificationMessageTriggered += this.mainView.OnDisplayFailureMessage;
             this.mainModel.NotificationTriggered += this.mainView.GetDeviceGeolocation;
             this.mainModel.DistrictsIslandsIdentifiersTriggered += this.mainView.LoadHomeForm;
+
+            //ADICIONADO POR MIGUEL -------
+            this.mainModel.DailyMeteorologyByLocationIdTriggered += this.mainView.LoadDailyMeteorology;
+            //ADICIONADO POR MIGUEL -------
         }
 
         public void CloseForm()
