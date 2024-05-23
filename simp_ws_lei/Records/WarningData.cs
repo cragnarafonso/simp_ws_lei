@@ -6,11 +6,11 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-//ADICIONADO POR MIGUEL -------
+//ADICIONADO POR Paulo -------
 
 namespace simp_ws_lei.Records
 {
-    public class MeteorologyData : IMeteorologyData
+    public class WarningData : IWarningData
     {
         [JsonPropertyName("precipitaProb")]
         public string PrecipitaProb { get; set; }
@@ -43,10 +43,10 @@ namespace simp_ws_lei.Records
         public string Latitude { get; set; }
 
 
-        public MeteorologyData (){}
+        public WarningData(){}
 
 
-        public MeteorologyData(string precipitaProb, string tMin, string tMax, string predWindDir, int idWeatherType, 
+        public WarningData(string precipitaProb, string tMin, string tMax, string predWindDir, int idWeatherType, 
             int classWindSpeed, string longitude, string forecastDate, int classPrecInt, string latitude) {
 
             PrecipitaProb = precipitaProb;

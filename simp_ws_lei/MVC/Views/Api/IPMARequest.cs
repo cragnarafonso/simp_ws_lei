@@ -14,6 +14,8 @@ namespace simp_ws_lei.MVC.Views
 
         private static readonly string DAILY_METEOROLOGY_LOCATIONID = "https://api.ipma.pt/open-data/forecast/meteorology/cities/daily/{globalIdLocal}.json";
 
+        private static readonly string DAILY_WARNING_LOCATIONID = "https://api.ipma.pt/open-data/forecast/warnings/warnings_www.json{globalIdLocal}.json";
+
         private IApiCaller Caller { get; set; }
 
         public IPMARequest(IApiCaller caller)
@@ -37,5 +39,20 @@ namespace simp_ws_lei.MVC.Views
             return Caller.Get(url);
         }
         //ADICIONADO POR MIGUEL -------
+
+
+
+
+        //ADICIONADO POR Paulo -------
+        public string GetDailyWarningByLocationId(string globalIdLocal)
+        {
+            string url = DAILY_WARNING_LOCATIONID;
+
+            //replace id location parameter from static url
+            url = url.Replace("{globalIdLocal}", globalIdLocal);
+
+            return Caller.Get(url);
+        }
+        //ADICIONADO POR Paulo -------
     }
 }

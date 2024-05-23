@@ -1,5 +1,4 @@
-﻿
-using simp_ws_lei.MVC.Models;
+﻿using simp_ws_lei.MVC.Models;
 using simp_ws_lei.MVC.Views;
 using System;
 
@@ -18,11 +17,13 @@ namespace simp_ws_lei.MVC.Controllers
             this.mainView.CloseFormTriggered += this.CloseForm;
             this.mainView.RequestDistrictsIslandsIdentifiersTriggered += this.mainModel.DeserializeDistrictsIslandsIdentifiers;
 
-            
             //ADICIONADO POR MIGUEL -------
             this.mainView.RequestDailyMeteorologyByLocationIdTriggered += this.mainModel.DeserializeDailyMeteorologyByLocationId;
             //ADICIONADO POR MIGUEL -------
 
+            //ADICIONADO POR Paulo -------
+            this.mainView.RequestDailyWarningByLocationIdTriggered += this.mainModel.DeserializeDailyWarningByLocationId;
+            //ADICIONADO POR Paulo -------
 
             this.mainView.GeolocationTriggered += this.mainModel.OrderDistrictsIslandsTriggered;
 
@@ -33,10 +34,14 @@ namespace simp_ws_lei.MVC.Controllers
             //ADICIONADO POR MIGUEL -------
             this.mainModel.DailyMeteorologyByLocationIdTriggered += this.mainView.LoadDailyMeteorology;
             //ADICIONADO POR MIGUEL -------
+
+            //ADICIONADO POR Paulo -------
+            this.mainModel.DailyWarningByLocationIdTriggered += this.mainView.LoadWarningForm;
+            //ADICIONADO POR Paulo -------
         }
 
         public void CloseForm()
-        { 
+        {
             Environment.Exit(1);
         }
 

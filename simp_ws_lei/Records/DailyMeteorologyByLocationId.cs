@@ -32,12 +32,13 @@ namespace simp_ws_lei.Records
         public DailyMeteorologyByLocationId() { }
 
 
-        public DailyMeteorologyByLocationId(string owner, string country, List<MeteorologyData> data, int globalIdLocal, string dataUpdate) { 
+        public DailyMeteorologyByLocationId(string owner, string country, List<MeteorologyData> data, int globalIdLocal, string dataUpdate)
+        {
             Owner = owner;
             Country = country;
             Data = data;
             GlobalIdLocal = globalIdLocal;
-            DataUpdate = dataUpdate;        
+            DataUpdate = dataUpdate;
         }
 
 

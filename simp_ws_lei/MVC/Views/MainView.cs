@@ -22,6 +22,14 @@ namespace simp_ws_lei.MVC.Views
         public event ApiTriggeredEventHandler RequestDailyMeteorologyByLocationIdTriggered;
         //ADICIONADO POR MIGUEL -------
 
+
+        //ADICIONADO POR Paulo -------
+        public event ApiTriggeredEventHandler RequestDailyWarningByLocationIdTriggered;
+        //ADICIONADO POR Paulo -------
+
+
+
+
         public delegate void GeolocationTriggeredEventHandler(ref ICoordinates coordinates);
         public event GeolocationTriggeredEventHandler GeolocationTriggered;
 
@@ -56,6 +64,16 @@ namespace simp_ws_lei.MVC.Views
             RequestDailyMeteorologyByLocationIdTriggered?.Invoke(json);
         }
         //ADICIONADO POR MIGUEL -------
+
+
+        //ADICIONADO POR Paulo -------
+        protected virtual void OnRequestDailyWarningByLocationIdTriggered(string json)
+        {
+            RequestDailyWarningByLocationIdTriggered?.Invoke(json);
+        }
+        //ADICIONADO POR Paulo -------
+
+
 
 
 
@@ -103,10 +121,13 @@ namespace simp_ws_lei.MVC.Views
 
         public void OnWarningClick()
         {
-            //Chamar a função que limpa o MainBodyPanel
+            // Chamar a função que limpa o MainBodyPanel
             this.CleanMainBodyPanel();
-            //TODO: Paulo, executar a lógica que permite carregar os dados (respeitando o design e a comunicação entre componente)
-            this.LoadWarningForm();
+            // Obtendo e carregando os avisos diários
+            string resultDailyWarning = this.request.GetDailyWarningByLocationId("locationId"); // Substitua "locationId" pelo ID correto
+            DailyWarningByLocationId dailyWarningByLocationId = DailyWarningByLocationId.FromJson(resultDailyWarning);
+            IDailyWarningByLocationId warningInterface = dailyWarningByLocationId; // Conversão explícita para a interface
+            this.LoadWarningForm(ref warningInterface);
         }
 
         public void OnSeaClick()
@@ -217,10 +238,17 @@ namespace simp_ws_lei.MVC.Views
             //ADICIONADO POR MIGUEL -------
         }
 
-        // TODO: Paulo, apenas carreguei o Form sem dados para testar, é necessário implementar a funcionalidade em causa (ex: ver código MIGUEL)
-        public void LoadWarningForm()
+
+        //ADICIONADO POR Paulo -------
+
+
+
+        public void LoadWarningForm(ref IDailyWarningByLocationId dailyWarningByLocationId)
         {
-            //Atribuir o MainView ao Form
+            // Como estamos usando a interface, não precisamos de casting
+            // Podemos acessar diretamente as propriedades da interface
+
+            // Atribuir o MainView ao Form
             this.warningForm = new WarningForm
             {
                 TopLevel = false,
@@ -230,11 +258,37 @@ namespace simp_ws_lei.MVC.Views
                 MainView = this
             };
 
+            // Adicionar o Label para exibir os avisos meteorológicos
+            Label warningLabel = new Label
+            {
+                Width = 400,
+                Height = 450,
+                Font = new System.Drawing.Font("Arial", 11),
+                Location = new System.Drawing.Point(5, 20),
+                AutoSize = true // Adicionado para ajustar automaticamente o tamanho do label
+            };
+
+            // Preencher o Label com os avisos meteorológicos
+            warningLabel.Text += $"ID da Área de Aviso: {dailyWarningByLocationId.IdAreaAviso}\n";
+            warningLabel.Text += $"Tipo de Alerta: {dailyWarningByLocationId.AwarenessTypeName}\n";
+            warningLabel.Text += $"Nível de Alerta: {dailyWarningByLocationId.AwarenessLevelID}\n";
+            warningLabel.Text += $"Início: {dailyWarningByLocationId.StartTime}\n";
+            warningLabel.Text += $"Fim: {dailyWarningByLocationId.EndTime}\n";
+            warningLabel.Text += $"Descrição: {dailyWarningByLocationId.Text}\n\n";
+
+            // Adicionar o Label ao WarningForm
+            this.warningForm.Controls.Add(warningLabel);
+
+            // Adicionar a WarningForm ao painel principal do MainForm
             this.mainForm.MainBodyPanel.Controls.Add(this.warningForm);
             this.warningForm.Show();
         }
 
-        // TODO: David, apenas carreguei o Form sem dados para testar, é necessário implementar a funcionalidade em causa (ex: ver código MIGUEL)
+
+
+
+
+
         public void LoadSeaForm()
         {
             //Atribuir o MainView ao Form

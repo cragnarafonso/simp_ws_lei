@@ -117,16 +117,20 @@
     <Compile Include="MVC\Views\MainView.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Records\DailyWarningByLocationId.cs" />
     <Compile Include="Records\DailyMeteorologyByLocationId.cs" />
     <Compile Include="Records\IDailyMeteorologyByLocationId.cs" />
+    <Compile Include="Records\IDailyWarningByLocationId.cs" />
     <Compile Include="Records\DeviceCoordinates.cs" />
     <Compile Include="Records\DistrictsIslands.cs" />
     <Compile Include="Records\DistrictsIslandsIdentifiers.cs" />
     <Compile Include="Records\IDistrictsIslandsIdentifiers.cs" />
     <Compile Include="Records\IDistrictsIslands.cs" />
     <Compile Include="Records\ICoordinates.cs" />
+    <Compile Include="Records\IWarningData.cs" />
     <Compile Include="Records\IMeteorologyData.cs" />
     <Compile Include="Records\Item.cs" />
+    <Compile Include="Records\WarningData.cs" />
     <Compile Include="Records\MeteorologyData.cs" />
     <EmbeddedResource Include="Forms\ErrorForm.resx">
       <DependentUpon>ErrorForm.cs</DependentUpon>

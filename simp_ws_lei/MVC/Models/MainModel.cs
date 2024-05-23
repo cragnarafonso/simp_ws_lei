@@ -13,6 +13,10 @@ namespace simp_ws_lei.MVC.Models
         private IDailyMeteorologyByLocationId dailyMeteorologyByLocationId;
         //ADICIONADO POR MIGUEL -------
 
+        //ADICIONADO POR Paulo -------
+        private IDailyWarningByLocationId dailyWarningByLocationId;
+        //ADICIONADO POR Paulo -------
+
         public delegate void NotificationMessageTriggeredEventHandler(string message);
         public event NotificationMessageTriggeredEventHandler NotificationMessageTriggered;
 
@@ -27,6 +31,11 @@ namespace simp_ws_lei.MVC.Models
         public event DailyMeteorologyByLocationIdTriggeredEventHandler DailyMeteorologyByLocationIdTriggered;
         //ADICIONADO POR MIGUEL -------
 
+        //ADICIONADO POR Paulo -------
+        public delegate void DailyWarningByLocationIdTriggeredEventHandler(ref IDailyWarningByLocationId dailyWarningByLocationId);
+        public event DailyWarningByLocationIdTriggeredEventHandler DailyWarningByLocationIdTriggered;
+        //ADICIONADO POR Paulo -------
+
         public MainModel()
         {
             this.districtsIslandsIdentifiers = new DistrictsIslandsIdentifiers();
@@ -34,17 +43,21 @@ namespace simp_ws_lei.MVC.Models
             //ADICIONADO POR MIGUEL -------
             this.dailyMeteorologyByLocationId = new DailyMeteorologyByLocationId();
             //ADICIONADO POR MIGUEL -------
+
+            //ADICIONADO POR Paulo -------
+            this.dailyWarningByLocationId = new DailyWarningByLocationId();
+            //ADICIONADO POR Paulo -------
         }
 
         protected virtual void OnNotificationFailureTriggered(string message)
         {
             NotificationMessageTriggered?.Invoke(message);
         }
+
         protected virtual void OnNotificationDeserializeDistrictsIslandsTriggered()
         {
             NotificationTriggered?.Invoke();
         }
-
 
         //ADICIONADO POR MIGUEL -------
         protected virtual void OnNotificationDeserializeDailyMeteorologyByLocationIdTriggered()
@@ -53,6 +66,12 @@ namespace simp_ws_lei.MVC.Models
         }
         //ADICIONADO POR MIGUEL -------
 
+        //ADICIONADO POR Paulo -------
+        protected virtual void OnNotificationDeserializeWarningByLocationIdTriggered()
+        {
+            DailyWarningByLocationIdTriggered?.Invoke(ref dailyWarningByLocationId);
+        }
+        //ADICIONADO POR Paulo -------
 
         protected virtual void OnNotificationOrderedDistrictsIslandsTriggered(ref IDistrictsIslandsIdentifiers districtsIslandsIdentifiers)
         {
@@ -73,31 +92,43 @@ namespace simp_ws_lei.MVC.Models
             }
         }
 
-
         //ADICIONADO POR MIGUEL -------
-
         public void DeserializeDailyMeteorologyByLocationId(string json)
         {
             try
             {
                 this.dailyMeteorologyByLocationId = DailyMeteorologyByLocationId.FromJson(json);
                 this.OnNotificationDeserializeDailyMeteorologyByLocationIdTriggered();
-                
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.StackTrace);
                 this.OnNotificationFailureTriggered("Não foi possível tratar os dados de meteorologia!");
             }
         }
-         //ADICIONADO POR MIGUEL -------
+        //ADICIONADO POR MIGUEL -------
 
+        //ADICIONADO POR Paulo -------
+        public void DeserializeDailyWarningByLocationId(string json)
+        {
+            try
+            {
+                this.dailyWarningByLocationId = DailyWarningByLocationId.FromJson(json);
+                this.OnNotificationDeserializeWarningByLocationIdTriggered();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.StackTrace);
+                this.OnNotificationFailureTriggered("Não foi possível tratar os dados dos avisos meteorológicos!");
+            }
+        }
+        //ADICIONADO POR Paulo -------
 
         public void OrderDistrictsIslandsTriggered(ref ICoordinates refCoordinates)
         {
             try
             {
-                if(refCoordinates != null)
+                if (refCoordinates != null)
                 {
                     this.coordinates = new DeviceCoordinates(refCoordinates.Latitude, refCoordinates.Longitude);
                     DistrictsIslands targetRegion = this.districtsIslandsIdentifiers.Data.Find(item => this.coordinates.Latitude.Equals(item.Latitude) && this.coordinates.Longitude.Equals(item.Longitude));
@@ -116,4 +147,3 @@ namespace simp_ws_lei.MVC.Models
         }
     }
 }
-
