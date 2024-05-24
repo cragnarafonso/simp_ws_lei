@@ -124,7 +124,7 @@ namespace simp_ws_lei.MVC.Views
             // Chamar a função que limpa o MainBodyPanel
             this.CleanMainBodyPanel();
             // Obtendo e carregando os avisos diários
-            string resultDailyWarning = this.request.GetDailyWarningByLocationId("locationId"); // Substitua "locationId" pelo ID correto
+            string resultDailyWarning = this.request.GetDailyWarningByLocationId(); // Substitua "locationId" pelo ID correto
             DailyWarningByLocationId dailyWarningByLocationId = DailyWarningByLocationId.FromJson(resultDailyWarning);
             IDailyWarningByLocationId warningInterface = dailyWarningByLocationId; // Conversão explícita para a interface
             this.LoadWarningForm(ref warningInterface);

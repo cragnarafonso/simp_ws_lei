@@ -44,14 +44,9 @@ namespace simp_ws_lei.MVC.Views
 
 
         //ADICIONADO POR Paulo -------
-        public string GetDailyWarningByLocationId(string globalIdLocal)
+        public string GetDailyWarningByLocationId()
         {
-            string url = DAILY_WARNING_LOCATIONID;
-
-            //replace id location parameter from static url
-            url = url.Replace("{globalIdLocal}", globalIdLocal);
-
-            return Caller.Get(url);
+            return Caller.Get(DAILY_WARNING_LOCATIONID);
         }
         //ADICIONADO POR Paulo -------
     }
