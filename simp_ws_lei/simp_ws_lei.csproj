@@ -127,10 +127,8 @@
     <Compile Include="Records\IDistrictsIslandsIdentifiers.cs" />
     <Compile Include="Records\IDistrictsIslands.cs" />
     <Compile Include="Records\ICoordinates.cs" />
-    <Compile Include="Records\IWarningData.cs" />
     <Compile Include="Records\IMeteorologyData.cs" />
     <Compile Include="Records\Item.cs" />
-    <Compile Include="Records\WarningData.cs" />
     <Compile Include="Records\MeteorologyData.cs" />
     <EmbeddedResource Include="Forms\ErrorForm.resx">
       <DependentUpon>ErrorForm.cs</DependentUpon>

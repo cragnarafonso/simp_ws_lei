@@ -283,10 +283,22 @@ namespace simp_ws_lei.MVC.Views
             this.mainForm.MainBodyPanel.Controls.Add(this.warningForm);
             this.warningForm.Show();
         }
+        /*
 
-
-
-
+        public void DeserializeDailyWarningByLocationId(string json)
+        {
+            try
+            {
+                this.dailyWarningByLocationId = DailyWarningByLocationId.FromJson(json);
+                NotificationMessageTriggered?.Invoke("Daily Warning deserialized successfully.");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.StackTrace);
+                NotificationMessageTriggered?.Invoke("Failed to deserialize Daily Warning.");
+            }
+        }
+        */
 
 
         public void LoadSeaForm()

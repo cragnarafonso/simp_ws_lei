@@ -41,6 +41,7 @@ namespace simp_ws_lei.Records
             return JsonSerializer.Deserialize<DailyWarningByLocationId>(jsonString);
         }
 
+
         public string ToJson()
         {
             return JsonSerializer.Serialize(this);

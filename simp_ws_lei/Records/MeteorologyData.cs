@@ -62,9 +62,9 @@ namespace simp_ws_lei.Records
 
         }
 
-        public static WarningData FromJson(string jsonString)
+        public static MeteorologyData FromJson(string jsonString)
         {
-            return JsonSerializer.Deserialize<WarningData>(jsonString);
+            return JsonSerializer.Deserialize<MeteorologyData>(jsonString);
         }
 
         public string ToJson()
