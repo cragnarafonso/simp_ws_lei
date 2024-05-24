@@ -14,7 +14,7 @@ namespace simp_ws_lei.MVC.Views
 
         private static readonly string DAILY_METEOROLOGY_LOCATIONID = "https://api.ipma.pt/open-data/forecast/meteorology/cities/daily/{globalIdLocal}.json";
 
-        private static readonly string DAILY_WARNING_LOCATIONID = "https://api.ipma.pt/open-data/forecast/warnings/warnings_www.json{globalIdLocal}.json";
+        private static readonly string DAILY_WARNING_LOCATIONID = "https://api.ipma.pt/open-data/forecast/warnings/warnings_www.json";
 
         private IApiCaller Caller { get; set; }
 
