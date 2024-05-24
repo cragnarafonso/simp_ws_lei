@@ -16,17 +16,17 @@ namespace simp_ws_lei.Records
         public string IdAreaAviso { get; set; }
 
         [JsonPropertyName("startTime")]
-        public string StartTime { get; set; }
+        public DateTime StartTime { get; set; }
 
         [JsonPropertyName("awarenessLevelID")]
         public string AwarenessLevelID { get; set; }
 
         [JsonPropertyName("endTime")]
-        public string EndTime { get; set; }
+        public DateTime EndTime { get; set; }
 
         public DailyWarningByLocationId() { }
 
-        public DailyWarningByLocationId(string text, string awarenessTypeName, string idAreaAviso, string startTime, string awarenessLevelID, string endTime)
+        public DailyWarningByLocationId(string text, string awarenessTypeName, string idAreaAviso, DateTime startTime, string awarenessLevelID, DateTime endTime)
         {
             Text = text;
             AwarenessTypeName = awarenessTypeName;
@@ -38,9 +38,17 @@ namespace simp_ws_lei.Records
 
         public static DailyWarningByLocationId FromJson(string jsonString)
         {
-            return JsonSerializer.Deserialize<DailyWarningByLocationId>(jsonString);
+            try
+            {
+                Console.WriteLine($"Attempting to deserialize the following JSON: {jsonString}");
+                return JsonSerializer.Deserialize<DailyWarningByLocationId>(jsonString);
+            }
+            catch (JsonException ex)
+            {
+                Console.WriteLine($"JSON Deserialization failed: {ex.Message}");
+                throw;
+            }
         }
-
 
         public string ToJson()
         {

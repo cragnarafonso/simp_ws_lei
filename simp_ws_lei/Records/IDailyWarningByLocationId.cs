@@ -13,9 +13,8 @@ namespace simp_ws_lei.Records
         string Text { get; set; }
         string AwarenessTypeName { get; set; }
         string IdAreaAviso { get; set; }
-        string StartTime { get; set; }
+        DateTime StartTime { get; set; }
         string AwarenessLevelID { get; set; }
-        string EndTime { get; set; }
-
+        DateTime EndTime { get; set; }
     }
 }
