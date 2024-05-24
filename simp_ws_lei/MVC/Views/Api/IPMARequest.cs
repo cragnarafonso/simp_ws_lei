@@ -40,9 +40,6 @@ namespace simp_ws_lei.MVC.Views
         }
         //ADICIONADO POR MIGUEL -------
 
-
-
-
         //ADICIONADO POR Paulo -------
         public string GetDailyWarningByLocationId()
         {

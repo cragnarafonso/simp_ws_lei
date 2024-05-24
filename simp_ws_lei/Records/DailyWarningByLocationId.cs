@@ -52,7 +52,11 @@ namespace simp_ws_lei.Records
 
         public string ToJson()
         {
-            return JsonSerializer.Serialize(this);
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true
+            };
+            return JsonSerializer.Serialize(this, options);
         }
     }
 }

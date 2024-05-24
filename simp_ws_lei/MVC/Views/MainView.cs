@@ -1,11 +1,9 @@
 ﻿using simp_ws_lei.Forms;
 using simp_ws_lei.Records;
 using System;
-using System.Collections.Generic;
-using System.Device.Location;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Cryptography;
+using System.Device.Location;
 using System.Windows.Forms;
 
 namespace simp_ws_lei.MVC.Views
@@ -22,13 +20,9 @@ namespace simp_ws_lei.MVC.Views
         public event ApiTriggeredEventHandler RequestDailyMeteorologyByLocationIdTriggered;
         //ADICIONADO POR MIGUEL -------
 
-
         //ADICIONADO POR Paulo -------
         public event ApiTriggeredEventHandler RequestDailyWarningByLocationIdTriggered;
         //ADICIONADO POR Paulo -------
-
-
-
 
         public delegate void GeolocationTriggeredEventHandler(ref ICoordinates coordinates);
         public event GeolocationTriggeredEventHandler GeolocationTriggered;
@@ -52,11 +46,11 @@ namespace simp_ws_lei.MVC.Views
         {
             CloseFormTriggered?.Invoke();
         }
+
         protected virtual void OnRequestDistrictsIslandsIdentifiersTriggered(string json)
         {
             RequestDistrictsIslandsIdentifiersTriggered?.Invoke(json);
         }
-
 
         //ADICIONADO POR MIGUEL -------
         protected virtual void OnRequestDailyMeteorologyByLocationIdTriggered(string json)
@@ -65,17 +59,12 @@ namespace simp_ws_lei.MVC.Views
         }
         //ADICIONADO POR MIGUEL -------
 
-
         //ADICIONADO POR Paulo -------
         protected virtual void OnRequestDailyWarningByLocationIdTriggered(string json)
         {
             RequestDailyWarningByLocationIdTriggered?.Invoke(json);
         }
         //ADICIONADO POR Paulo -------
-
-
-
-
 
         protected virtual void OnGeolocationTriggered(ref ICoordinates coordinates)
         {
@@ -96,7 +85,7 @@ namespace simp_ws_lei.MVC.Views
             try
             {
                 string result = this.request.GetDistrictsIslandsIdentifiers();
-                OnRequestDistrictsIslandsIdentifiersTriggered(result);                
+                OnRequestDistrictsIslandsIdentifiersTriggered(result);
             }
             catch (Exception ex)
             {
@@ -113,9 +102,9 @@ namespace simp_ws_lei.MVC.Views
 
         public void OnHomeClick()
         {
-            //Chamar a função que limpa o MainBodyPanel
+            // Chamar a função que limpa o MainBodyPanel
             this.CleanMainBodyPanel();
-            //TODO: Warning all -> estamos a assumir que os dados estão carregados, poderá proporcionar uma situação de erro???
+            // Assumindo que os dados estão carregados, pode proporcionar uma situação de erro???
             this.LoadHomeForm(ref homeIdentifiers);
         }
 
@@ -124,17 +113,23 @@ namespace simp_ws_lei.MVC.Views
             // Chamar a função que limpa o MainBodyPanel
             this.CleanMainBodyPanel();
             // Obtendo e carregando os avisos diários
-            string resultDailyWarning = this.request.GetDailyWarningByLocationId(); // Substitua "locationId" pelo ID correto
-            DailyWarningByLocationId dailyWarningByLocationId = DailyWarningByLocationId.FromJson(resultDailyWarning);
-            IDailyWarningByLocationId warningInterface = dailyWarningByLocationId; // Conversão explícita para a interface
-            this.LoadWarningForm(ref warningInterface);
+            try
+            {
+                string resultDailyWarning = this.request.GetDailyWarningByLocationId();
+                OnRequestDailyWarningByLocationIdTriggered(resultDailyWarning);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.StackTrace);
+                OnDisplayFailureMessage("Não foi possível aceder aos avisos meteorológicos!");
+            }
         }
 
         public void OnSeaClick()
         {
-            //Chamar a função que limpa o MainBodyPanel
+            // Chamar a função que limpa o MainBodyPanel
             this.CleanMainBodyPanel();
-            //TODO: David, executar a lógica que permite carregar os dados (respeitando o design e a comunicação entre componente)
+            // TODO: David, executar a lógica que permite carregar os dados (respeitando o design e a comunicação entre componentes)
             this.LoadSeaForm();
         }
 
@@ -152,6 +147,7 @@ namespace simp_ws_lei.MVC.Views
             this.mainForm.MainBodyPanel.Controls.Add(this.errorForm);
             this.errorForm.Show();
         }
+
         public void GetDeviceGeolocation()
         {
             this.coordinates = null;
@@ -169,8 +165,6 @@ namespace simp_ws_lei.MVC.Views
             OnGeolocationTriggered(ref coordinates);
         }
 
-
-
         //ADICIONADO POR MIGUEL -------
         public void GetDailyMeteorology(ref string globalIdLocal)
         {
@@ -184,31 +178,30 @@ namespace simp_ws_lei.MVC.Views
                 Debug.WriteLine(ex.StackTrace);
                 OnDisplayFailureMessage("Não foi possível aceder à meteorologia!");
             }
-            
         }
 
         public void LoadDailyMeteorology(ref IDailyMeteorologyByLocationId dailyMeteorologyByLocationId)
         {
-            //clean home body panel
+            // Limpar home body panel
             this.homeForm.HomeBodyPanel.Controls.Clear();
 
-            Label MeteorologyLabel = new Label();
-
-            MeteorologyLabel.Width = 400;
-            MeteorologyLabel.Height = 450;
-            MeteorologyLabel.Font = new System.Drawing.Font("Arial", 11);
-            MeteorologyLabel.Location = new System.Drawing.Point(5, 20);
+            Label MeteorologyLabel = new Label
+            {
+                Width = 400,
+                Height = 450,
+                Font = new System.Drawing.Font("Arial", 11),
+                Location = new System.Drawing.Point(5, 20)
+            };
 
             foreach (var Meteorology in dailyMeteorologyByLocationId.Data)
             {
-                MeteorologyLabel.Text += "Dia: " +  Meteorology.ForecastDate + "\n";
+                MeteorologyLabel.Text += "Dia: " + Meteorology.ForecastDate + "\n";
                 MeteorologyLabel.Text += "Temperatura Máxima: " + Meteorology.TMax + "\n";
                 MeteorologyLabel.Text += "Temperatura Mínima: " + Meteorology.TMin + "\n";
                 MeteorologyLabel.Text += "Precipitação: " + Meteorology.PrecipitaProb + "%\n\n";
             }
 
             this.homeForm.HomeBodyPanel.Controls.Add(MeteorologyLabel);
-
         }
         //ADICIONADO POR MIGUEL -------
 
@@ -230,7 +223,6 @@ namespace simp_ws_lei.MVC.Views
             this.mainForm.MainBodyPanel.Controls.Add(homeForm);
             this.homeForm.Show();
 
-
             //ADICIONADO POR MIGUEL -------
             //LOAD DEFAULT DAILY METEOROLOGY FROM FIRST LOCAL ID
             string FirstGlobalLocalId = this.homeIdentifiers.Data[0].GlobalLocalId.ToString();
@@ -238,17 +230,9 @@ namespace simp_ws_lei.MVC.Views
             //ADICIONADO POR MIGUEL -------
         }
 
-
         //ADICIONADO POR Paulo -------
-
-
-
         public void LoadWarningForm(ref IDailyWarningByLocationId dailyWarningByLocationId)
         {
-            // Como estamos usando a interface, não precisamos de casting
-            // Podemos acessar diretamente as propriedades da interface
-
-            // Atribuir o MainView ao Form
             this.warningForm = new WarningForm
             {
                 TopLevel = false,
@@ -258,17 +242,15 @@ namespace simp_ws_lei.MVC.Views
                 MainView = this
             };
 
-            // Adicionar o Label para exibir os avisos meteorológicos
             Label warningLabel = new Label
             {
                 Width = 400,
                 Height = 450,
                 Font = new System.Drawing.Font("Arial", 11),
                 Location = new System.Drawing.Point(5, 20),
-                AutoSize = true // Adicionado para ajustar automaticamente o tamanho do label
+                AutoSize = true
             };
 
-            // Preencher o Label com os avisos meteorológicos
             warningLabel.Text += $"ID da Área de Aviso: {dailyWarningByLocationId.IdAreaAviso}\n";
             warningLabel.Text += $"Tipo de Alerta: {dailyWarningByLocationId.AwarenessTypeName}\n";
             warningLabel.Text += $"Nível de Alerta: {dailyWarningByLocationId.AwarenessLevelID}\n";
@@ -276,34 +258,14 @@ namespace simp_ws_lei.MVC.Views
             warningLabel.Text += $"Fim: {dailyWarningByLocationId.EndTime}\n";
             warningLabel.Text += $"Descrição: {dailyWarningByLocationId.Text}\n\n";
 
-            // Adicionar o Label ao WarningForm
             this.warningForm.Controls.Add(warningLabel);
 
-            // Adicionar a WarningForm ao painel principal do MainForm
             this.mainForm.MainBodyPanel.Controls.Add(this.warningForm);
             this.warningForm.Show();
         }
-        /*
-
-        public void DeserializeDailyWarningByLocationId(string json)
-        {
-            try
-            {
-                this.dailyWarningByLocationId = DailyWarningByLocationId.FromJson(json);
-                NotificationMessageTriggered?.Invoke("Daily Warning deserialized successfully.");
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.StackTrace);
-                NotificationMessageTriggered?.Invoke("Failed to deserialize Daily Warning.");
-            }
-        }
-        */
-
 
         public void LoadSeaForm()
         {
-            //Atribuir o MainView ao Form
             this.seaForm = new SeaForm
             {
                 TopLevel = false,
