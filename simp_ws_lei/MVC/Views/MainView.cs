@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Device.Location;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace simp_ws_lei.MVC.Views
@@ -18,9 +17,14 @@ namespace simp_ws_lei.MVC.Views
         public delegate void ApiTriggeredEventHandler(string json);
         public event ApiTriggeredEventHandler RequestDistrictsIslandsIdentifiersTriggered;
 
-        //ADICIONADO POR MIGUEL -------
+        // ADICIONADO POR MIGUEL -------
         public event ApiTriggeredEventHandler RequestDailyMeteorologyByLocationIdTriggered;
-        //ADICIONADO POR MIGUEL -------
+        // ADICIONADO POR MIGUEL -------
+
+        // ADICIONADO POR DAVID
+        public delegate void SeaForecastTriggeredEventHandler(int day);
+        public event SeaForecastTriggeredEventHandler RequestSeaForecastTriggered;
+        // ADICIONADO POR DAVID
 
         public delegate void GeolocationTriggeredEventHandler(ref ICoordinates coordinates);
         public event GeolocationTriggeredEventHandler GeolocationTriggered;
@@ -49,15 +53,19 @@ namespace simp_ws_lei.MVC.Views
             RequestDistrictsIslandsIdentifiersTriggered?.Invoke(json);
         }
 
-
-        //ADICIONADO POR MIGUEL -------
+        // ADICIONADO POR MIGUEL -------
         protected virtual void OnRequestDailyMeteorologyByLocationIdTriggered(string json)
         {
             RequestDailyMeteorologyByLocationIdTriggered?.Invoke(json);
         }
-        //ADICIONADO POR MIGUEL -------
+        // ADICIONADO POR MIGUEL -------
 
-
+        // ADICIONADO POR DAVID
+        protected virtual void OnRequestSeaForecastTriggered(int day)
+        {
+            RequestSeaForecastTriggered?.Invoke(day);
+        }
+        // ADICIONADO POR DAVID
 
         protected virtual void OnGeolocationTriggered(ref ICoordinates coordinates)
         {
@@ -78,7 +86,7 @@ namespace simp_ws_lei.MVC.Views
             try
             {
                 string result = this.request.GetDistrictsIslandsIdentifiers();
-                OnRequestDistrictsIslandsIdentifiersTriggered(result);                
+                OnRequestDistrictsIslandsIdentifiersTriggered(result);
             }
             catch (Exception ex)
             {
@@ -95,25 +103,25 @@ namespace simp_ws_lei.MVC.Views
 
         public void OnHomeClick()
         {
-            //Chamar a função que limpa o MainBodyPanel
+            // Chamar a função que limpa o MainBodyPanel
             this.CleanMainBodyPanel();
-            //TODO: Warning all -> estamos a assumir que os dados estão carregados, poderá proporcionar uma situação de erro???
+            // TODO: Warning all -> estamos a assumir que os dados estão carregados, poderá proporcionar uma situação de erro???
             this.LoadHomeForm(ref homeIdentifiers);
         }
 
         public void OnWarningClick()
         {
-            //Chamar a função que limpa o MainBodyPanel
+            // Chamar a função que limpa o MainBodyPanel
             this.CleanMainBodyPanel();
-            //TODO: Paulo, executar a lógica que permite carregar os dados (respeitando o design e a comunicação entre componente)
+            // TODO: Paulo, executar a lógica que permite carregar os dados (respeitando o design e a comunicação entre componente)
             this.LoadWarningForm();
         }
 
         public void OnSeaClick()
         {
-            //Chamar a função que limpa o MainBodyPanel
+            // Chamar a função que limpa o MainBodyPanel
             this.CleanMainBodyPanel();
-            //TODO: David, executar a lógica que permite carregar os dados (respeitando o design e a comunicação entre componente)
+            // TODO: David, executar a lógica que permite carregar os dados (respeitando o design e a comunicação entre componente)
             this.LoadSeaForm();
         }
 
@@ -131,6 +139,7 @@ namespace simp_ws_lei.MVC.Views
             this.mainForm.MainBodyPanel.Controls.Add(this.errorForm);
             this.errorForm.Show();
         }
+
         public void GetDeviceGeolocation()
         {
             this.coordinates = null;
@@ -148,9 +157,7 @@ namespace simp_ws_lei.MVC.Views
             OnGeolocationTriggered(ref coordinates);
         }
 
-
-
-        //ADICIONADO POR MIGUEL -------
+        // ADICIONADO POR MIGUEL -------
         public void GetDailyMeteorology(ref string globalIdLocal)
         {
             try
@@ -163,33 +170,61 @@ namespace simp_ws_lei.MVC.Views
                 Debug.WriteLine(ex.StackTrace);
                 OnDisplayFailureMessage("Não foi possível aceder à meteorologia!");
             }
-            
         }
 
         public void LoadDailyMeteorology(ref IDailyMeteorologyByLocationId dailyMeteorologyByLocationId)
         {
-            //clean home body panel
+            // Clean home body panel
             this.homeForm.HomeBodyPanel.Controls.Clear();
 
-            Label MeteorologyLabel = new Label();
-
-            MeteorologyLabel.Width = 400;
-            MeteorologyLabel.Height = 450;
-            MeteorologyLabel.Font = new System.Drawing.Font("Arial", 11);
-            MeteorologyLabel.Location = new System.Drawing.Point(5, 20);
-
-            foreach (var Meteorology in dailyMeteorologyByLocationId.Data)
+            Label meteorologyLabel = new Label
             {
-                MeteorologyLabel.Text += "Dia: " +  Meteorology.ForecastDate + "\n";
-                MeteorologyLabel.Text += "Temperatura Máxima: " + Meteorology.TMax + "\n";
-                MeteorologyLabel.Text += "Temperatura Mínima: " + Meteorology.TMin + "\n";
-                MeteorologyLabel.Text += "Precipitação: " + Meteorology.PrecipitaProb + "%\n\n";
+                Width = 400,
+                Height = 450,
+                Font = new System.Drawing.Font("Arial", 11),
+                Location = new System.Drawing.Point(5, 20)
+            };
+
+            foreach (var meteorology in dailyMeteorologyByLocationId.Data)
+            {
+                meteorologyLabel.Text += "Dia: " + meteorology.ForecastDate + "\n";
+                meteorologyLabel.Text += "Temperatura Máxima: " + meteorology.TMax + "\n";
+                meteorologyLabel.Text += "Temperatura Mínima: " + meteorology.TMin + "\n";
+                meteorologyLabel.Text += "Precipitação: " + meteorology.PrecipitaProb + "%\n\n";
             }
 
-            this.homeForm.HomeBodyPanel.Controls.Add(MeteorologyLabel);
-
+            this.homeForm.HomeBodyPanel.Controls.Add(meteorologyLabel);
         }
-        //ADICIONADO POR MIGUEL -------
+        // ADICIONADO POR MIGUEL -------
+
+        // ADICIONADO POR DAVID
+        public void LoadDailySeaForecast(ref IDailySeaForecast dailySeaForecast)
+        {
+            // Clean sea body panel
+            this.seaForm.SeaPanel.Controls.Clear();
+
+            Label seaForecastLabel = new Label
+            {
+                Width = 400,
+                Height = 450,
+                Font = new System.Drawing.Font("Arial", 11),
+                Location = new System.Drawing.Point(5, 20)
+            };
+
+            foreach (var seaForecast in dailySeaForecast.Data)
+            {
+                seaForecastLabel.Text += "Data: " + dailySeaForecast.ForecastDate + "\n";
+                seaForecastLabel.Text += "Altura da Onda: " + seaForecast.WaveHighMin + " - " + seaForecast.WaveHighMax + " m\n";
+                seaForecastLabel.Text += "Direção da Onda: " + seaForecast.PredWaveDir + "\n";
+                seaForecastLabel.Text += "Período da Onda: " + seaForecast.WavePeriodMin + " - " + seaForecast.WavePeriodMax + " s\n";
+                seaForecastLabel.Text += "Altura Significativa do Mar: " + seaForecast.TotalSeaMin + " - " + seaForecast.TotalSeaMax + " m\n";
+                seaForecastLabel.Text += "Temperatura da Superfície do Mar: " + seaForecast.SstMin + " - " + seaForecast.SstMax + " ºC\n";
+                seaForecastLabel.Text += "Localização: (" + seaForecast.Latitude + ", " + seaForecast.Longitude + ")\n\n";
+            }
+
+            this.seaForm.SeaPanel.Controls.Add(seaForecastLabel);
+        }
+        // ADICIONADO POR DAVID
 
         public void LoadHomeForm(ref IDistrictsIslandsIdentifiers districtsIslandsIdentifiers)
         {
@@ -209,18 +244,17 @@ namespace simp_ws_lei.MVC.Views
             this.mainForm.MainBodyPanel.Controls.Add(homeForm);
             this.homeForm.Show();
 
-
-            //ADICIONADO POR MIGUEL -------
-            //LOAD DEFAULT DAILY METEOROLOGY FROM FIRST LOCAL ID
-            string FirstGlobalLocalId = this.homeIdentifiers.Data[0].GlobalLocalId.ToString();
-            this.GetDailyMeteorology(ref FirstGlobalLocalId);
-            //ADICIONADO POR MIGUEL -------
+            // ADICIONADO POR MIGUEL -------
+            // LOAD DEFAULT DAILY METEOROLOGY FROM FIRST LOCAL ID
+            string firstGlobalLocalId = this.homeIdentifiers.Data[0].GlobalLocalId.ToString();
+            this.GetDailyMeteorology(ref firstGlobalLocalId);
+            // ADICIONADO POR MIGUEL -------
         }
 
         // TODO: Paulo, apenas carreguei o Form sem dados para testar, é necessário implementar a funcionalidade em causa (ex: ver código MIGUEL)
         public void LoadWarningForm()
         {
-            //Atribuir o MainView ao Form
+            // Atribuir o MainView ao Form
             this.warningForm = new WarningForm
             {
                 TopLevel = false,
@@ -237,7 +271,7 @@ namespace simp_ws_lei.MVC.Views
         // TODO: David, apenas carreguei o Form sem dados para testar, é necessário implementar a funcionalidade em causa (ex: ver código MIGUEL)
         public void LoadSeaForm()
         {
-            //Atribuir o MainView ao Form
+            // Atribuir o MainView ao Form
             this.seaForm = new SeaForm
             {
                 TopLevel = false,
@@ -249,6 +283,10 @@ namespace simp_ws_lei.MVC.Views
 
             this.mainForm.MainBodyPanel.Controls.Add(this.seaForm);
             this.seaForm.Show();
+
+            // ADICIONADO POR DAVID
+            this.OnRequestSeaForecastTriggered(0); // Default to today's forecast
+            // ADICIONADO POR DAVID
         }
     }
 }
