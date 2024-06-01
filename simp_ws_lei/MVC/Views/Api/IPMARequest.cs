@@ -14,6 +14,7 @@ namespace simp_ws_lei.MVC.Views
 
         private static readonly string DAILY_METEOROLOGY_LOCATIONID = "https://api.ipma.pt/open-data/forecast/meteorology/cities/daily/{globalIdLocal}.json";
 
+        private static readonly string DAILY_SEA_LOCATIONID = "https://api.ipma.pt/open-data/forecast/oceanography/daily/hp-daily-sea-forecast-day{idDay}.json";
         private IApiCaller Caller { get; set; }
 
         public IPMARequest(IApiCaller caller)
@@ -37,5 +38,16 @@ namespace simp_ws_lei.MVC.Views
             return Caller.Get(url);
         }
         //ADICIONADO POR MIGUEL -------
+
+
+        //ADICIONADO POR DAVID --------
+
+        public string GetDailySeaByLocationId (string idDay) { 
+
+            string url = DAILY_SEA_LOCATIONID;
+
+            url = url.Replace("{idDay}", idDay);
+            return Caller.Get(url);
+        }
     }
 }
